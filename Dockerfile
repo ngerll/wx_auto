@@ -12,7 +12,7 @@ RUN apt-get -y install python-mysqldb
 RUN sed -i s/"PermitRootLogin without-password"/"PermitRootLogin yes"/g /etc/ssh/sshd_config
 
 copy app /var/www/app
-RUN sudo pip install -r /var/www/app/requirements.txt
+RUN pip install -r /var/www/app/requirements.txt
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 copy nginx.conf /etc/nginx/nginx.conf
 
