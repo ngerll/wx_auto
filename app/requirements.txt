@@ -1,0 +1,7 @@
+requests
+gunicorn
+gevent
+beautifulsoup4
+werobot
+lxml
+flask
