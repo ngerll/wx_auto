@@ -158,8 +158,8 @@ def getsystetype(process_id, task_id, cookie):
 
     subres = requests.post(urlsubmit, subprodatas, headers=headers, cookies=cookie)
 
-    returninfo = '问题：{0}，编号：{1}，提出单位：{2}，提出人：{3}。提交结果：{4}。'. \
-        format(str(problemTitle), str(problemId), str(problemRequestDept), str(problemRequest), str(subres.content))
+    returninfo = '问题：{0}'. \
+        format(str(problemTitle))
 
     return returninfo
 
