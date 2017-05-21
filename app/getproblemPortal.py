@@ -34,8 +34,9 @@ def getprolist(username, passwd):
              'flowName': '全部'}
     req = getreq(url, datas, cookie)
 
-    exereqs = ''
-    n = 1
+    # exereqs = ''
+    n = 0
+    j = 0
 
     if len(req['rows']) > 0:
         for plist in req['rows']:
@@ -45,10 +46,12 @@ def getprolist(username, passwd):
             exereq = getsystetype(PROCESS_ID, TASK_ID, cookie)
 
             # exereqs = exereqs + str(n) + ' -----' + exereq + '\n'
-            if exereq == '200':
+            if exereq == '"success"':
                 n = n + 1
+            else:
+                j = j + 1
 
-        exereqs = str(n) + '个问题工单已处理！'
+        exereqs = str(n) + '个问题工单已处理！' + str(j) + '个问题工单处理失败!'
 
         return exereqs
 
@@ -56,8 +59,8 @@ def getprolist(username, passwd):
         return '暂无问题工单!'
 
 
-def getsystetype(process_id, task_id, cookie):
 
+def getsystetype(process_id, task_id, cookie):
     try:
         urlinsy = 'http://123.126.34.222:16666/uflow/process.do?method=prepareHandle&processId=%s&taskId=%s' % (
             process_id, task_id)  # 获取所属系统URL
@@ -70,8 +73,8 @@ def getsystetype(process_id, task_id, cookie):
 
         soup = BeautifulSoup(req, 'lxml').find_all('script')[2].string
 
-        forminfo = str(re.findall('form = (.*?)var transitions', soup, re.S)[0]).strip() #表单抓取
-        resinfolists = json.loads(forminfo[:-1]) #表单抓取信息toJSON
+        forminfo = str(re.findall('form = (.*?)var transitions', soup, re.S)[0]).strip()  # 表单抓取
+        resinfolists = json.loads(forminfo[:-1])  # 表单抓取信息toJSON
 
         probaseinfo = resinfolists['sheetList'][0]  # 问题基本信息
         proviceaccpet = resinfolists['sheetList'][1]  # 受理信息
@@ -167,9 +170,10 @@ def getsystetype(process_id, task_id, cookie):
         #
         # return returninfo
 
-        return subres.status_code
+        return subres.text
     except:
-        return '500'
+        return 500
+
 
 if __name__ == '__main__':
     print getprolist('huqiao', 'valencia429')
