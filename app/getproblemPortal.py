@@ -136,7 +136,7 @@ def getsystetype(process_id, task_id, cookie):
             'firstAcceptPhone': firstAcceptPhone,
             'firstAcceptMail': firstAcceptMail,
             'firstEndTime': firstEndTime,
-            'questionType': '数据',
+            'questionType': '系统报错',
             'questionLevel': '紧急',
             'recurrence': '否',
             'effectDegree': '影响系统运行',
